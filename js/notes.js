@@ -13,14 +13,18 @@ class Notes {
 
   playNotes() {
     this.playedNotes.forEach((note) => {
-      note.audio.playbackRate = 0.5;
+      console.log(note);
+      note.audio.playbackRate = 1.5;
       note.audio.play();
     });
   }
 
   checkIfCorrect() {
     for (let i = 0; i < this.playedNotes.length; i++) {
-      return this.playedNotes[i].name === this.clickedBtns[i].id;
+      if (this.playedNotes[i].name === this.clickedBtns[i].id) {
+        const okSound = new Audio("./../audio/right-answer.mp3");
+        okSound.play();
+      }
     }
   }
 }

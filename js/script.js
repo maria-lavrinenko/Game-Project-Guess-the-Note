@@ -10,8 +10,8 @@ const notes = [
   { name: "si", audio: new Audio("./../audio/si.mp3") },
 ];
 
-const randomNumber = Math.floor(Math.random() * notes.length);
-const aNote = new Notes(notes[randomNumber].name, notes[randomNumber].audio);
+let randomNumber = Math.floor(Math.random() * notes.length);
+let aNote = new Notes(notes[randomNumber].name, notes[randomNumber].audio);
 
 const startGameBtn = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
@@ -47,56 +47,71 @@ menuScreen.addEventListener("click", () => {
 let canPlay = true;
 
 warmUpBtn.addEventListener("click", () => {
-  aNote.randomNoteChoice(notes);
+  aNote.randomNoteChoice(aNote);
   aNote.playNotes();
 });
 
 singleNote.addEventListener("click", () => {
-  aNote.randomNoteChoice(notes);
+  aNote.randomNoteChoice(aNote);
+  aNote.playNotes();
 
-  selectNote();
+  // // console.log(aNote.clickedBtns);
+  // console.log(aNote.checkIfCorrect);
+  // console.log(aNote.clickedBtns);
+  // console.log(aNote.playedNotes[0].name);
+  // console.log(aNote.clickedBtns[0].id);
+
   if (aNote.clickedBtns.length === 1) {
     canPlay = false;
     aNote.checkIfCorrect();
+  }
+  if (aNote.checkIfCorrect) {
+    const okSound = new Audio("./../audio/right-answer.mp3");
+    okSound.play();
+  } else {
+    const noSound = new Audio("./../audio/wrong-answer.mp3");
+    noSound.play();
   }
 });
 
 triplet.addEventListener("click", () => {
   for (let i = 0; i < 3; i++) {
-    aNote.randomNoteChoice(notes);
+    let randomNumber = Math.floor(Math.random() * notes.length);
+    let aNote = new Notes(notes[randomNumber].name, notes[randomNumber].audio);
+    console.log(aNote.playedNotes);
+
+    aNote.randomNoteChoice(aNote);
   }
   aNote.playNotes();
-  selectNote();
+
   if (notes.clickedBtns.length === 3) {
     canPlay = false;
     aNote.checkIfCorrect();
   }
 });
 
-function selectNote() {
-  playScreen.querySelectorAll(".notesBtn").forEach((notesBtn) => {
-    notesBtn.addEventListener("click", () => {
-      if (notesBtn.classList.contains("clicked") || !canPlay) return;
-      notesBtn.classList.toggle("clicked");
+playScreen.querySelectorAll(".notesBtn").forEach((notesBtn) => {
+  notesBtn.addEventListener("click", () => {
+    if (notesBtn.classList.contains("clicked") || !canPlay) return;
+    notesBtn.classList.toggle("clicked");
 
-      aNote.clickedBtns.push(notesBtn);
-    });
+    aNote.clickedBtns.push(notesBtn);
   });
-}
+});
 
 function playShort() {
-  aNote.playedNotes.playbackRate = 0.5;
+  aNote.audio.playbackRate = 2.5;
   aNote.playedNotes.forEach((note) => note.audio.play());
 }
 
 function playLong() {
-  aNote.playedNotes.playbackRate = 3.5;
+  aNote.audio.playbackRate = 0.5;
   aNote.playedNotes.forEach((note) => note.audio.play());
 }
 
 function playTheScale() {
-  notes.forEach((note) => {
-    note.audio.playbackRate = 2.0;
-    note.audio.play();
-  });
+  for (let i = 0; i < notes.length; i++) {
+    notes[i].audio.playbackRate = 0.4;
+    notes[i].audio.play();
+  }
 }
