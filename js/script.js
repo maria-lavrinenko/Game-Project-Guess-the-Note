@@ -10,9 +10,8 @@ const notes = [
   { name: "si", audio: new Audio("./../audio/si.mp3") },
 ];
 
-// const doNote = new Notes('do', audio("./../audio/do.mp3"))
-// const notes  = [do,re,mi]
-const aNote = new Notes(notes[Math.floor(Math.random() * notes.length)]);
+const randomNumber = Math.floor(Math.random() * notes.length);
+const aNote = new Notes(notes[randomNumber].name, notes[randomNumber].audio);
 
 const startGameBtn = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
@@ -54,7 +53,7 @@ warmUpBtn.addEventListener("click", () => {
 
 singleNote.addEventListener("click", () => {
   aNote.randomNoteChoice(notes);
-  //   aNote.playNotes();
+
   selectNote();
   if (aNote.clickedBtns.length === 1) {
     canPlay = false;
