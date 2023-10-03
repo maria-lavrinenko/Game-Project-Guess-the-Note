@@ -1,6 +1,6 @@
-import Notes from "./notes.js";
+import Note from "./notes.js";
 
-const notes = [
+const data = [
   { name: "do", audio: new Audio("./../audio/do.mp3") },
   { name: "re", audio: new Audio("./../audio/re.mp3") },
   { name: "mi", audio: new Audio("./../audio/mi.mp3") },
@@ -9,9 +9,10 @@ const notes = [
   { name: "la", audio: new Audio("./../audio/la.mp3") },
   { name: "si", audio: new Audio("./../audio/si.mp3") },
 ];
-
-let randomNumber = Math.floor(Math.random() * notes.length);
-let aNote = new Notes(notes[randomNumber].name, notes[randomNumber].audio);
+const notes = data.map((noteData) => new Note(noteData.name, noteData.audio));
+let notesToPlay = [];
+// let randomNumber = Math.floor(Math.random() * notes.length);
+// let aNote = new Notes(notes[randomNumber].name, notes[randomNumber].audio);
 
 const startGameBtn = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
@@ -30,7 +31,7 @@ const playLongBtn = document.getElementById("play-long");
 playLongBtn.addEventListener("click", playLong);
 
 const scale = document.getElementById("scale");
-scale.addEventListener("click", playTheScale);
+scale.addEventListener("click", () => playTheScale(notes));
 
 startGameBtn.addEventListener("click", startGame);
 
@@ -52,66 +53,72 @@ warmUpBtn.addEventListener("click", () => {
 });
 
 singleNote.addEventListener("click", () => {
-  aNote.randomNoteChoice(aNote);
-  aNote.playNotes();
-
-  // // console.log(aNote.clickedBtns);
-  // console.log(aNote.checkIfCorrect);
-  // console.log(aNote.clickedBtns);
-  // console.log(aNote.playedNotes[0].name);
-  // console.log(aNote.clickedBtns[0].id);
-
-  if (aNote.clickedBtns.length === 1) {
-    canPlay = false;
-    aNote.checkIfCorrect();
-  }
-  if (aNote.checkIfCorrect) {
-    const okSound = new Audio("./../audio/right-answer.mp3");
-    okSound.play();
-  } else {
-    const noSound = new Audio("./../audio/wrong-answer.mp3");
-    noSound.play();
-  }
+  const randomNote = notes[Math.floor(Math.random() * notes.length)];
+  notesToPlay.push(randomNote);
+  console.log(notesToPlay);
+  notesToPlay[0].play();
+  // aNote.randomNoteChoice(aNote);
+  // console.log(aNote.playedNotes);
+  // aNote.playNotes();
+  // aNote.selectNote();
+  // if (aNote.clickedBtns.length === 1) {
+  //   // canPlay = false;
+  //   aNote.checkIfCorrect();
+  // }
 });
+
+// if (aNote.checkIfCorrect) {
+//   const okSound = new Audio("./../audio/right-answer.mp3");
+//   okSound.play();
+// } else {
+//   const noSound = new Audio("./../audio/wrong-answer.mp3");
+//   noSound.play();
+// }
 
 triplet.addEventListener("click", () => {
-  for (let i = 0; i < 3; i++) {
-    let randomNumber = Math.floor(Math.random() * notes.length);
-    let aNote = new Notes(notes[randomNumber].name, notes[randomNumber].audio);
-    console.log(aNote.playedNotes);
-
-    aNote.randomNoteChoice(aNote);
-  }
-  aNote.playNotes();
-
-  if (notes.clickedBtns.length === 3) {
-    canPlay = false;
-    aNote.checkIfCorrect();
-  }
-});
-
-playScreen.querySelectorAll(".notesBtn").forEach((notesBtn) => {
-  notesBtn.addEventListener("click", () => {
-    if (notesBtn.classList.contains("clicked") || !canPlay) return;
-    notesBtn.classList.toggle("clicked");
-
-    aNote.clickedBtns.push(notesBtn);
-  });
+  // for (let i = 0; i < 3; i++) {
+  //   let randomNumber = Math.floor(Math.random() * notes.length);
+  //   let aNote = new Notes(notes[randomNumber].name, notes[randomNumber].audio);
+  //   console.log(aNote.playedNotes);
+  //   aNote.randomNoteChoice(aNote);
+  // }
+  // aNote.playNotes();
+  // if (notes.clickedBtns.length === 3) {
+  //   canPlay = false;
+  //   aNote.checkIfCorrect();
+  // }
 });
 
 function playShort() {
-  aNote.audio.playbackRate = 2.5;
-  aNote.playedNotes.forEach((note) => note.audio.play());
+  notesToPlay.forEach((note) => note.short());
+  playTheScale(notesToPlay);
 }
 
 function playLong() {
-  aNote.audio.playbackRate = 0.5;
-  aNote.playedNotes.forEach((note) => note.audio.play());
+  notesToPlay.forEach((note) => note.long());
+  playTheScale(notesToPlay);
 }
 
-function playTheScale() {
-  for (let i = 0; i < notes.length; i++) {
-    notes[i].audio.playbackRate = 0.4;
-    notes[i].audio.play();
-  }
+function playTheScale(arr, index = 0) {
+  if (index === arr.length) return;
+  arr[index].play();
+  arr[index].audio.addEventListener("ended", () => {
+    playTheScale(arr, index + 1);
+  });
+
+  // console.log(notes[i].audio);
+  // const currentNote = notes[i].audio;
+
+  // currentNote.playbackRate = 0.4;
+  // currentNote.play();
+  // currentNote.addEventListener("ended", () => {
+  //   playTheScale(i + 1);
+  // });
+  // for (let i = 0; i < notes.length + 1; i++) {
+  //   // const currentNote = notes[i];
+  //   notes[i].audio.play();
+  //   notes[i].audio.addEventListener("ended", () => {
+  //     playTheScale(notes[i + 1]);
+  //   });
+  // }
 }
