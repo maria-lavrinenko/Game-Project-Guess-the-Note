@@ -24,7 +24,8 @@ const singleNote = document.getElementById("single-note");
 const triplet = document.getElementById("triplet");
 
 const playScreen = document.getElementById("play-screen");
-const counter = document.querySelector("p span");
+const counter = document.querySelector("#time span");
+const score = document.querySelector("#score span");
 
 const playShortBtn = document.getElementById("play-short");
 playShortBtn.addEventListener("click", playShort);
@@ -51,6 +52,7 @@ menuScreen.addEventListener("click", () => {
 });
 
 let canPlay = true;
+let scoring = 0;
 
 warmUpBtn.addEventListener("click", () => {
   startSingleNote();
@@ -62,8 +64,11 @@ singleNote.addEventListener("click", () => {
   const intervalId = setInterval(() => {
     count--;
     counter.textContent = count;
+    score.textContent = scoring;
+
     if (count === 0) {
       //GAME OVER MESSAGE TO ADD
+      canPlay = false;
       clearInterval(intervalId);
     }
   }, 1000);
@@ -99,6 +104,7 @@ function startSingleNote() {
 function checkIfCorrect(arr) {
   for (let i = 0; i < arr.length; i++) {
     if (notesToPlay[i].name === arr[i].id) {
+      scoring++;
       console.log("Yesss");
       arr[i].classList.add("right-answer");
 
