@@ -10,10 +10,10 @@ const data = [
   { name: "si", audio: new Audio("./../audio/si.mp3") },
 ];
 const notes = data.map((noteData) => new Note(noteData.name, noteData.audio));
+
 let notesToPlay = [];
 let clickedBtns = [];
 let count = 30;
-// const clickedBtnClass = document.querySelectorAll(".clicked");
 
 const startGameBtn = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
@@ -39,6 +39,8 @@ scale.addEventListener("click", () => {
   playTheScale(notes);
 });
 
+const warmUpOverBtn = document.getElementById("warm-up-over");
+
 startGameBtn.addEventListener("click", startGame);
 
 function startGame() {
@@ -53,10 +55,6 @@ menuScreen.addEventListener("click", () => {
 
 let canPlay = true;
 let scoring = 0;
-
-warmUpBtn.addEventListener("click", () => {
-  startSingleNote();
-});
 
 singleNote.addEventListener("click", () => {
   startSingleNote();
@@ -175,7 +173,11 @@ function playTheScale(arr, index = 0) {
   if (index === arr.length) return;
   console.log(arr);
   arr[index].play();
-  arr[index].audio.addEventListener("ended", () => {
-    playTheScale(arr, index + 1);
-  });
+  arr[index].audio.addEventListener(
+    "ended",
+    () => {
+      playTheScale(arr, index + 1);
+    },
+    { once: true }
+  );
 }
