@@ -6,3 +6,15 @@ body {
 .hidden {
   display: none;
 }
+
+.right-answer {
+  background-color: aquamarine;
+}
+
+.wrong-answer {
+  background-color: red;
+}
+
+.expected-answer {
+  background-color: aqua;
+}
