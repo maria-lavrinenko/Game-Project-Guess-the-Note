@@ -103,6 +103,7 @@ function checkIfCorrect(arr) {
       arr[i].classList.add("right-answer");
 
       const okSound = new Audio("./../audio/right-answer.mp3");
+      okSound.playbackRate = 3;
       okSound.play();
     } else {
       console.log("Nooo");
@@ -115,6 +116,7 @@ function checkIfCorrect(arr) {
       }, 1300);
 
       const noSound = new Audio("./../audio/wrong-answer.mp3");
+      noSound.playbackRate = 3;
       noSound.play();
     }
   }
