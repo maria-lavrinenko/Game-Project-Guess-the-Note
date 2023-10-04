@@ -1,4 +1,4 @@
-class Notes {
+class Note {
   constructor(name, audio) {
     this.name = name;
     this.audio = audio;
@@ -20,4 +20,4 @@ class Notes {
     this.audio.playbackRate = 3;
   }
 }
-export default Notes;
+export default Note;

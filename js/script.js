@@ -65,12 +65,16 @@ export function startGame() {
 }
 
 singleNote.addEventListener("click", () => {
+  notesToPlay = [];
+  clickedBtns = [];
+  scoring = 0;
+  score.textContent = scoring;
   startSingleNote();
 
   const intervalId = setInterval(() => {
     time--;
     timer.textContent = time;
-    score.textContent = scoring;
+    // score.textContent = scoring;
 
     if (time === 0) {
       canPlay = false;
@@ -89,9 +93,10 @@ function startSingleNote() {
   notesToPlay[0].play();
 
   const notesBtn = document.querySelectorAll(".notesBtn");
+
   for (let i = 0; i < notesBtn.length; i++) {
     notesBtn[i].addEventListener("click", () => {
-      if (notesBtn[i].classList.contains("clicked") && !canPlay) return;
+      if (notesBtn[i].classList.contains("clicked") || !canPlay) return;
       notesBtn[i].classList.add("clicked");
 
       if (clickedBtns.length < 1) {
@@ -108,7 +113,7 @@ function startSingleNote() {
             notesToPlay = [];
             clickedBtns = [];
             startSingleNote();
-          }, 1000);
+          }, 1200);
         }
       }
     });
@@ -122,7 +127,10 @@ function randomChoice() {
 }
 
 triplet.addEventListener("click", () => {
+  time = 10;
   scoringTriplet = 0;
+  notesToPlay = [];
+  clickedBtns = [];
   startTriplet();
 
   const intervalId = setInterval(() => {
@@ -132,7 +140,7 @@ triplet.addEventListener("click", () => {
 
     if (time === 0) {
       gameOver();
-      scoringTriplet = 0;
+
       canPlay = false;
       clearInterval(intervalId);
     }
@@ -158,17 +166,17 @@ function startTriplet() {
 
         if (clickedBtns.length === 3) {
           canPlay = false;
-
+          // setTimeout(() => {
           checkIfCorrect(clickedBtns);
+          // }, 700);
 
           score.textContent = scoringTriplet;
           setTimeout(() => {
-            // resetClass();
-
-            // clickedBtns = [];
+            resetClass();
+            clickedBtns = [];
             notesToPlay = [];
             startTriplet();
-          }, 1200);
+          }, 1500);
         }
       }
     });
@@ -219,6 +227,5 @@ function resetClass() {
       "wrong-answer",
       "expected-answer"
     );
-    btn.disabled = false;
   });
 }

@@ -1,5 +1,5 @@
-import Notes from "./notes.js";
 import Note from "./notes.js";
+
 import { playScreen, startGame, menuScreen } from "./script.js";
 
 export function playShort(arr) {
