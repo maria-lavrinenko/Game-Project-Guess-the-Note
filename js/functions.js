@@ -1,5 +1,5 @@
 import Note from "./notes.js";
-import { playScreen, menuScreen } from "./script.js";
+import { playScreen, startGame, menuScreen } from "./script.js";
 
 export function playShort(arr) {
   arr.forEach((note) => note.short());
@@ -13,7 +13,7 @@ export function playLong(arr) {
 
 export function playTheScale(arr, index = 0) {
   if (index === arr.length) return;
-  // console.log(arr);
+  arr[index].normal();
   arr[index].play();
   arr[index].audio.addEventListener(
     "ended",
@@ -25,14 +25,16 @@ export function playTheScale(arr, index = 0) {
 }
 
 export function gameOver() {
-  const dialog = document.createElement("dialog");
-  playScreen.append(dialog);
+  const dialog = document.getElementById("dialog");
 
-  dialog.src = "./../styles/press-any-key.jpeg";
   dialog.showModal();
 
   dialog.addEventListener("keypress", () => {
+    dialog.close();
+    scoring = 0;
     playScreen.classList.add("hidden");
     menuScreen.classList.remove("hidden");
+
+    startGame();
   });
 }

@@ -1,5 +1,5 @@
 import Note from "./notes.js";
-import * as functions from "./functions.js";
+import { playShort, playLong, playTheScale, gameOver } from "./functions.js";
 
 const data = [
   { name: "do", audio: new Audio("./../audio/do.mp3") },
@@ -12,13 +12,15 @@ const data = [
 ];
 const notes = data.map((noteData) => new Note(noteData.name, noteData.audio));
 
-let time = 30;
+let time = 10;
 let scoring = 0;
-let canPlay = true;
-let clickedBtns = [];
-let notesToPlay = [];
 
-const startGameBtn = document.getElementById("start");
+let scoringTriplet = 0;
+let canPlay = true;
+let notesToPlay = [];
+let clickedBtns = [];
+
+const startBtn = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
 export const menuScreen = document.getElementById("menu-screen");
 
@@ -32,29 +34,35 @@ timer.textContent = time;
 
 const score = document.querySelector("#score span");
 
-const playShortBtn = document.getElementById("play-short");
-playShortBtn.addEventListener("click", functions.playShort(notesToPlay));
-
-const playLongBtn = document.getElementById("play-long");
-playLongBtn.addEventListener("click", functions.playLong(notesToPlay));
-
 const scale = document.getElementById("scale");
+
+const playShortBtn = document.getElementById("play-short");
+const playLongBtn = document.getElementById("play-long");
+playLongBtn.addEventListener("click", () => playLong(notesToPlay));
+playShortBtn.addEventListener("click", () => playShort(notesToPlay));
+
 scale.addEventListener("click", () => {
   notes.forEach((note) => note.normal());
-  functions.playTheScale(notes);
+  playTheScale(notes);
 });
 
-startGameBtn.addEventListener("click", startGame);
+startBtn.addEventListener("click", startToMenu);
 
-function startGame() {
+function startToMenu() {
   startScreen.classList.add("hidden");
   menuScreen.classList.remove("hidden");
+  startGame();
 }
 
-menuScreen.addEventListener("click", () => {
-  menuScreen.classList.add("hidden");
-  playScreen.classList.remove("hidden");
-});
+export function startGame() {
+  time = 10;
+
+  timer.textContent = time;
+  menuScreen.addEventListener("click", () => {
+    menuScreen.classList.add("hidden");
+    playScreen.classList.remove("hidden");
+  });
+}
 
 singleNote.addEventListener("click", () => {
   startSingleNote();
@@ -66,23 +74,24 @@ singleNote.addEventListener("click", () => {
 
     if (time === 0) {
       canPlay = false;
-
       clearInterval(intervalId);
-      functions.gameOver();
+      gameOver();
     }
   }, 1000);
 });
 
 function startSingleNote() {
+  console.log("startSingleNote -notes to play", notesToPlay);
   canPlay = true;
-  randomChoice();
 
+  randomChoice();
+  notesToPlay[0].normal();
   notesToPlay[0].play();
 
   const notesBtn = document.querySelectorAll(".notesBtn");
   for (let i = 0; i < notesBtn.length; i++) {
     notesBtn[i].addEventListener("click", () => {
-      if (notesBtn[i].classList.contains("clicked") || !canPlay) return;
+      if (notesBtn[i].classList.contains("clicked") && !canPlay) return;
       notesBtn[i].classList.add("clicked");
 
       if (clickedBtns.length < 1) {
@@ -92,13 +101,14 @@ function startSingleNote() {
           canPlay = false;
 
           checkIfCorrect(clickedBtns);
+          score.textContent = scoring;
+
           setTimeout(() => {
-            notesToPlay = [];
-            canPlay = true;
             resetClass();
+            notesToPlay = [];
             clickedBtns = [];
             startSingleNote();
-          }, 1300);
+          }, 1000);
         }
       }
     });
@@ -108,6 +118,7 @@ function startSingleNote() {
 function randomChoice() {
   const randomNote = notes[Math.floor(Math.random() * notes.length)];
   notesToPlay.push(randomNote);
+  console.log("random choice func - notes to play", notesToPlay);
 }
 
 triplet.addEventListener("click", () => {
@@ -118,7 +129,7 @@ triplet.addEventListener("click", () => {
     score.textContent = scoring;
 
     if (time === 0) {
-      functions.gameOver();
+      gameOver();
 
       canPlay = false;
       clearInterval(intervalId);
@@ -132,14 +143,13 @@ function startTriplet() {
     randomChoice();
   }
 
-  functions.playTheScale(notesToPlay);
+  playTheScale(notesToPlay);
 
   const notesBtn = document.querySelectorAll(".notesBtn");
   for (let i = 0; i < notesBtn.length; i++) {
     notesBtn[i].addEventListener("click", () => {
-      if (notesBtn[i].classList.contains("clicked") || !canPlay) return;
+      if (!canPlay) return;
       notesBtn[i].classList.add("clicked");
-      notesBtn[i].disabled = true;
 
       if (clickedBtns.length < 3) {
         clickedBtns.push(notesBtn[i]);
@@ -148,13 +158,14 @@ function startTriplet() {
           canPlay = false;
 
           checkIfCorrect(clickedBtns);
+
+          score.textContent = scoringTriplet;
           setTimeout(() => {
-            notesToPlay = [];
-            canPlay = true;
             resetClass();
+            notesToPlay = [];
             clickedBtns = [];
             startTriplet();
-          }, 1300);
+          }, 1200);
         }
       }
     });
@@ -162,10 +173,13 @@ function startTriplet() {
 }
 
 function checkIfCorrect(arr) {
+  canPlay = false;
+  let tripletCount = 0;
   for (let i = 0; i < arr.length; i++) {
     if (notesToPlay[i].name === arr[i].id) {
+      tripletCount++;
       scoring++;
-      score.textContent = scoring;
+
       console.log("Yesss");
       arr[i].classList.add("right-answer");
 
@@ -180,12 +194,15 @@ function checkIfCorrect(arr) {
       expectedAnswer.classList.add("expected-answer");
       setTimeout(() => {
         expectedAnswer.classList.remove("expected-answer");
-      }, 1300);
+      }, 1000);
 
       const noSound = new Audio("./../audio/wrong-answer.mp3");
       noSound.playbackRate = 3;
       noSound.play();
     }
+  }
+  if (tripletCount > 1) {
+    scoringTriplet += 1;
   }
 }
 
