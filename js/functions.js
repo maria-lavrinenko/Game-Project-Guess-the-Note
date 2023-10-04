@@ -1,3 +1,4 @@
+import Notes from "./notes.js";
 import Note from "./notes.js";
 import { playScreen, startGame, menuScreen } from "./script.js";
 
@@ -31,7 +32,6 @@ export function gameOver() {
 
   dialog.addEventListener("keypress", () => {
     dialog.close();
-    scoring = 0;
     playScreen.classList.add("hidden");
     menuScreen.classList.remove("hidden");
 

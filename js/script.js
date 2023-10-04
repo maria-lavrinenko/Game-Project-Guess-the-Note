@@ -122,15 +122,17 @@ function randomChoice() {
 }
 
 triplet.addEventListener("click", () => {
+  scoringTriplet = 0;
   startTriplet();
+
   const intervalId = setInterval(() => {
     time--;
     timer.textContent = time;
-    score.textContent = scoring;
+    score.textContent = scoringTriplet;
 
     if (time === 0) {
       gameOver();
-
+      scoringTriplet = 0;
       canPlay = false;
       clearInterval(intervalId);
     }
@@ -161,9 +163,10 @@ function startTriplet() {
 
           score.textContent = scoringTriplet;
           setTimeout(() => {
-            resetClass();
+            // resetClass();
+
+            // clickedBtns = [];
             notesToPlay = [];
-            clickedBtns = [];
             startTriplet();
           }, 1200);
         }
@@ -204,6 +207,8 @@ function checkIfCorrect(arr) {
   if (tripletCount > 1) {
     scoringTriplet += 1;
   }
+  resetClass();
+  clickedBtns = [];
 }
 
 function resetClass() {
