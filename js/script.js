@@ -209,6 +209,8 @@ function checkIfCorrect(arr) {
       console.log("Nooo");
 
       arr[i].classList.add("wrong-answer");
+      noSound.playbackRate = 3;
+      noSound.play();
       setTimeout(() => {
         arr[i].classList.remove("wrong-answer");
       }, 1000);
@@ -218,9 +220,6 @@ function checkIfCorrect(arr) {
     setTimeout(() => {
       expectedAnswer.classList.remove("expected-answer");
     }, 1200);
-
-    noSound.playbackRate = 3;
-    noSound.play();
   }
 
   if (tripletCount > 1) {

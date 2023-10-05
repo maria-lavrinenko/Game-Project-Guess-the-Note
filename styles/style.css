@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  outline: solid;
 }
 body {
   display: flex;
@@ -302,7 +301,7 @@ button:hover {
   display: none;
 }
 
-#dialog #dialog img {
+#dialog img {
   position: fixed;
   margin: auto;
   top: 50%;
