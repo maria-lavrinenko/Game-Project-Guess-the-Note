@@ -10,14 +10,20 @@
   </head>
   <body>
     <div id="start-screen">
-      <h1>nice title</h1>
-      <p>welcome text</p>
+      <h1>Guess the note</h1>
       <button id="start">Start</button>
+      <p>welcome text</p>
     </div>
 
     <div id="menu-screen" class="hidden">
-      <button id="single-note">Single note</button>
-      <button id="triplet">Triplet</button>
+      <section class="sec-menu-screen">
+        <img class="menu-img" src="./styles/single-note.png" alt="" />
+        <button id="single-note">Single note</button>
+      </section>
+      <section class="sec-menu-screen">
+        <img class="menu-img" src="./styles/triplet.png" alt="" />
+        <button id="triplet">Triplet</button>
+      </section>
     </div>
 
     <div id="play-screen" class="hidden">
@@ -42,7 +48,7 @@
       </button>
     </div>
     <dialog id="dialog">
-      <img src="./styles/press-any-key.jpeg" alt="" />
+      <img src="./styles/press-any-key.jpeg" alt="Press any key to quit" />
       <p>Your score:: <span></span></p>
     </dialog>
   </body>

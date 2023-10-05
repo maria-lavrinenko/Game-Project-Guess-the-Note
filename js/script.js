@@ -23,7 +23,7 @@ let clickedBtns = [];
 const startBtn = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
 export const menuScreen = document.getElementById("menu-screen");
-
+const notesBtn = document.querySelectorAll(".notesBtn");
 const singleNote = document.getElementById("single-note");
 const triplet = document.getElementById("triplet");
 
@@ -77,8 +77,10 @@ singleNote.addEventListener("click", () => {
     // score.textContent = scoring;
 
     if (time === 0) {
+      console.log("hello?");
       canPlay = false;
       clearInterval(intervalId);
+      resetClass();
       gameOver();
     }
   }, 1000);
@@ -93,10 +95,11 @@ function startSingleNote() {
   notesToPlay[0].play();
 
   const notesBtn = document.querySelectorAll(".notesBtn");
-
+  console.log("notesBtn", notesBtn);
   for (let i = 0; i < notesBtn.length; i++) {
     notesBtn[i].addEventListener("click", () => {
       if (notesBtn[i].classList.contains("clicked") || !canPlay) return;
+      console.log("button clicked");
       notesBtn[i].classList.add("clicked");
 
       if (clickedBtns.length < 1) {
@@ -124,6 +127,7 @@ function randomChoice() {
   const randomNote = notes[Math.floor(Math.random() * notes.length)];
   notesToPlay.push(randomNote);
   console.log("random choice func - notes to play", notesToPlay);
+  console.log("clicked btn", clickedBtns);
 }
 
 triplet.addEventListener("click", () => {
@@ -140,7 +144,7 @@ triplet.addEventListener("click", () => {
 
     if (time === 0) {
       gameOver();
-
+      resetClass();
       canPlay = false;
       clearInterval(intervalId);
     }
@@ -149,37 +153,38 @@ triplet.addEventListener("click", () => {
 
 function startTriplet() {
   canPlay = true;
+  clickedBtns.length = 0;
   for (let i = 0; i < 3; i++) {
     randomChoice();
   }
-
+  notesToPlay.forEach((note) => note.normal());
   playTheScale(notesToPlay);
 
-  const notesBtn = document.querySelectorAll(".notesBtn");
   for (let i = 0; i < notesBtn.length; i++) {
-    notesBtn[i].addEventListener("click", () => {
-      if (!canPlay) return;
-      notesBtn[i].classList.add("clicked");
+    notesBtn[i].addEventListener("click", tripletButtons);
+  }
+}
 
-      if (clickedBtns.length < 3) {
-        clickedBtns.push(notesBtn[i]);
+function tripletButtons(event) {
+  if (!canPlay) return;
+  event.target.classList.add("clicked");
 
-        if (clickedBtns.length === 3) {
-          canPlay = false;
-          // setTimeout(() => {
-          checkIfCorrect(clickedBtns);
-          // }, 700);
+  if (clickedBtns.length < 3) {
+    clickedBtns.push(event.target);
 
-          score.textContent = scoringTriplet;
-          setTimeout(() => {
-            resetClass();
-            clickedBtns = [];
-            notesToPlay = [];
-            startTriplet();
-          }, 1500);
-        }
-      }
-    });
+    if (clickedBtns.length === 3) {
+      canPlay = false;
+
+      checkIfCorrect(clickedBtns);
+
+      score.textContent = scoringTriplet;
+      setTimeout(() => {
+        notesToPlay = [];
+        resetClass();
+        clickedBtns.length = 0;
+        startTriplet();
+      }, 1500);
+    }
   }
 }
 
@@ -205,7 +210,7 @@ function checkIfCorrect(arr) {
       expectedAnswer.classList.add("expected-answer");
       setTimeout(() => {
         expectedAnswer.classList.remove("expected-answer");
-      }, 1000);
+      }, 1200);
 
       const noSound = new Audio("./../audio/wrong-answer.mp3");
       noSound.playbackRate = 3;
@@ -215,12 +220,11 @@ function checkIfCorrect(arr) {
   if (tripletCount > 1) {
     scoringTriplet += 1;
   }
-  resetClass();
-  clickedBtns = [];
 }
 
 function resetClass() {
-  clickedBtns.forEach((btn) => {
+  notesBtn.forEach((btn) => {
+    console.log(btn);
     btn.classList.remove(
       "clicked",
       "right-answer",

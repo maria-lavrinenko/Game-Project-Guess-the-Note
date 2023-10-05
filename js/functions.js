@@ -14,7 +14,7 @@ export function playLong(arr) {
 
 export function playTheScale(arr, index = 0) {
   if (index === arr.length) return;
-  arr[index].normal();
+
   arr[index].play();
   arr[index].audio.addEventListener(
     "ended",

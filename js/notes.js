@@ -5,6 +5,7 @@ class Note {
   }
 
   play() {
+    console.log(this.audio.playbackRate);
     this.audio.play();
   }
 
