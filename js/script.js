@@ -20,6 +20,11 @@ let canPlay = true;
 let notesToPlay = [];
 let clickedBtns = [];
 
+const finalScore = document.getElementById("final-score");
+
+const noSound = new Audio("./../audio/wrong-answer.mp3");
+const okSound = new Audio("./../audio/right-answer.mp3");
+
 const startBtn = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
 export const menuScreen = document.getElementById("menu-screen");
@@ -78,24 +83,22 @@ singleNote.addEventListener("click", () => {
     // score.textContent = scoring;
 
     if (time === 0) {
-      console.log("hello?");
       canPlay = false;
       clearInterval(intervalId);
       resetClass();
+      clickedBtns.length = 0;
       gameOver();
     }
   }, 1000);
 });
 
 function startSingleNote() {
-  console.log("startSingleNote -notes to play", notesToPlay);
   canPlay = true;
 
   randomChoice();
   notesToPlay[0].normal();
   notesToPlay[0].play();
 
-  console.log("notesBtn", notesBtn);
   for (let i = 0; i < notesBtn.length; i++) {
     notesBtn[i].addEventListener("click", singleButtons);
   }
@@ -129,7 +132,7 @@ function randomChoice() {
   const randomNote = notes[Math.floor(Math.random() * notes.length)];
   notesToPlay.push(randomNote);
   console.log("random choice func - notes to play", notesToPlay);
-  console.log("clicked btn", clickedBtns);
+  console.log("clicked btn at random choice moment", clickedBtns);
 }
 
 triplet.addEventListener("click", () => {
@@ -202,13 +205,15 @@ function checkIfCorrect(arr) {
       console.log("Yesss");
       arr[i].classList.add("right-answer");
 
-      const okSound = new Audio("./../audio/right-answer.mp3");
       okSound.playbackRate = 3;
       okSound.play();
     } else {
       console.log("Nooo");
 
       arr[i].classList.add("wrong-answer");
+      setTimeout(() => {
+        arr[i].classList.remove("wrong-answer");
+      }, 1000);
     }
     const expectedAnswer = document.getElementById(notesToPlay[i].name);
     expectedAnswer.classList.add("expected-answer");
@@ -216,7 +221,6 @@ function checkIfCorrect(arr) {
       expectedAnswer.classList.remove("expected-answer");
     }, 1200);
 
-    const noSound = new Audio("./../audio/wrong-answer.mp3");
     noSound.playbackRate = 3;
     noSound.play();
   }
@@ -228,7 +232,6 @@ function checkIfCorrect(arr) {
 
 function resetClass() {
   notesBtn.forEach((btn) => {
-    console.log(btn);
     btn.classList.remove(
       "clicked",
       "right-answer",
