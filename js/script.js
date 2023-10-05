@@ -97,29 +97,31 @@ function startSingleNote() {
 
   console.log("notesBtn", notesBtn);
   for (let i = 0; i < notesBtn.length; i++) {
-    notesBtn[i].addEventListener("click", () => {
-      if (notesBtn[i].classList.contains("clicked") || !canPlay) return;
-      console.log("button clicked");
-      notesBtn[i].classList.add("clicked");
+    notesBtn[i].addEventListener("click", singleButtons);
+  }
+}
 
-      if (clickedBtns.length < 1) {
-        clickedBtns.push(notesBtn[i]);
+function singleButtons(event) {
+  if (event.target.classList.contains("clicked") || !canPlay) return;
+  console.log("button clicked");
+  event.target.classList.add("clicked");
 
-        if (clickedBtns.length === 1) {
-          canPlay = false;
+  if (clickedBtns.length < 1) {
+    clickedBtns.push(event.target);
 
-          checkIfCorrect(clickedBtns);
-          score.textContent = scoring;
+    if (clickedBtns.length === 1) {
+      canPlay = false;
 
-          setTimeout(() => {
-            resetClass();
-            notesToPlay = [];
-            clickedBtns = [];
-            startSingleNote();
-          }, 1200);
-        }
-      }
-    });
+      checkIfCorrect(clickedBtns);
+      score.textContent = scoring;
+
+      setTimeout(() => {
+        resetClass();
+        notesToPlay = [];
+        clickedBtns = [];
+        startSingleNote();
+      }, 1200);
+    }
   }
 }
 
