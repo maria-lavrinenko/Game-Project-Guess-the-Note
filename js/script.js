@@ -94,7 +94,6 @@ function startSingleNote() {
   notesToPlay[0].normal();
   notesToPlay[0].play();
 
-  const notesBtn = document.querySelectorAll(".notesBtn");
   console.log("notesBtn", notesBtn);
   for (let i = 0; i < notesBtn.length; i++) {
     notesBtn[i].addEventListener("click", () => {
