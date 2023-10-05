@@ -66,6 +66,7 @@ export function startGame() {
 
 singleNote.addEventListener("click", () => {
   notesToPlay = [];
+  resetClass();
   clickedBtns = [];
   scoring = 0;
   score.textContent = scoring;
@@ -130,6 +131,7 @@ function randomChoice() {
 }
 
 triplet.addEventListener("click", () => {
+  resetClass();
   time = 10;
   scoringTriplet = 0;
   notesToPlay = [];
