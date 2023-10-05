@@ -20,8 +20,6 @@ let canPlay = true;
 let notesToPlay = [];
 let clickedBtns = [];
 
-const finalScore = document.getElementById("final-score");
-
 const noSound = new Audio("./../audio/wrong-answer.mp3");
 const okSound = new Audio("./../audio/right-answer.mp3");
 

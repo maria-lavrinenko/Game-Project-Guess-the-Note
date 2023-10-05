@@ -302,7 +302,7 @@ button:hover {
   display: none;
 }
 
-#dialog img {
+#dialog #dialog img {
   position: fixed;
   margin: auto;
   top: 50%;
