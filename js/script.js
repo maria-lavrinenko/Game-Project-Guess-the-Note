@@ -147,10 +147,10 @@ triplet.addEventListener("click", () => {
     score.textContent = scoringTriplet;
 
     if (time === 0) {
-      gameOver();
       resetClass();
       canPlay = false;
       clearInterval(intervalId);
+      gameOver();
     }
   }, 1000);
 });

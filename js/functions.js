@@ -32,9 +32,9 @@ export function gameOver() {
 
   dialog.addEventListener("keypress", () => {
     dialog.close();
-    playScreen.classList.add("hidden");
-    menuScreen.classList.remove("hidden");
+    // playScreen.classList.add("hidden");
+    // menuScreen.classList.remove("hidden");
 
-    startGame();
+    window.location.reload();
   });
 }
