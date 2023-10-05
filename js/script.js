@@ -206,17 +206,18 @@ function checkIfCorrect(arr) {
       console.log("Nooo");
 
       arr[i].classList.add("wrong-answer");
-      const expectedAnswer = document.getElementById(notesToPlay[i].name);
-      expectedAnswer.classList.add("expected-answer");
-      setTimeout(() => {
-        expectedAnswer.classList.remove("expected-answer");
-      }, 1200);
-
-      const noSound = new Audio("./../audio/wrong-answer.mp3");
-      noSound.playbackRate = 3;
-      noSound.play();
     }
+    const expectedAnswer = document.getElementById(notesToPlay[i].name);
+    expectedAnswer.classList.add("expected-answer");
+    setTimeout(() => {
+      expectedAnswer.classList.remove("expected-answer");
+    }, 1200);
+
+    const noSound = new Audio("./../audio/wrong-answer.mp3");
+    noSound.playbackRate = 3;
+    noSound.play();
   }
+
   if (tripletCount > 1) {
     scoringTriplet += 1;
   }
