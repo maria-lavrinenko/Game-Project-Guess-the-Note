@@ -11,7 +11,9 @@ const data = [
   { name: "si", audio: new Audio("./../audio/si.mp3") },
 ];
 const notes = data.map((noteData) => new Note(noteData.name, noteData.audio));
-
+export const finalAudio = new Audio(
+  "./../audio/Ed Sheeran - Shape Of You _ Piano Cover by Pianella Piano (256  kbps).mp3"
+);
 let time = 10;
 let scoring = 0;
 
@@ -19,6 +21,7 @@ let scoringTriplet = 0;
 let canPlay = true;
 let notesToPlay = [];
 let clickedBtns = [];
+let state = "";
 
 const noSound = new Audio("./../audio/wrong-answer.mp3");
 const okSound = new Audio("./../audio/right-answer.mp3");
@@ -68,6 +71,9 @@ export function startGame() {
 }
 
 singleNote.addEventListener("click", () => {
+  state = "singleNote";
+  let time = 10;
+  timer.textContent = time;
   notesToPlay = [];
   resetClass();
   clickedBtns = [];
@@ -92,7 +98,7 @@ singleNote.addEventListener("click", () => {
 
 function startSingleNote() {
   canPlay = true;
-
+  let time = 10;
   randomChoice();
   notesToPlay[0].normal();
   notesToPlay[0].play();
@@ -103,7 +109,12 @@ function startSingleNote() {
 }
 
 function singleButtons(event) {
-  if (event.target.classList.contains("clicked") || !canPlay) return;
+  if (
+    event.target.classList.contains("clicked") ||
+    !canPlay ||
+    state !== "singleNote"
+  )
+    return;
   console.log("button clicked");
   event.target.classList.add("clicked");
 
@@ -120,6 +131,7 @@ function singleButtons(event) {
         resetClass();
         notesToPlay = [];
         clickedBtns = [];
+        let time = 10;
         startSingleNote();
       }, 1200);
     }
@@ -134,8 +146,10 @@ function randomChoice() {
 }
 
 triplet.addEventListener("click", () => {
+  state = "tripletNote";
   resetClass();
   time = 10;
+  timer.textContent = time;
   scoringTriplet = 0;
   notesToPlay = [];
   clickedBtns = [];
@@ -170,7 +184,7 @@ function startTriplet() {
 }
 
 function tripletButtons(event) {
-  if (!canPlay) return;
+  if (!canPlay || state !== "tripletNote") return;
   event.target.classList.add("clicked");
 
   if (clickedBtns.length < 3) {

@@ -10,7 +10,6 @@ body {
 
 #start-screen {
   background-color: #f3e2ab;
-
   text-wrap: nowrap;
   display: flex;
   flex-direction: column;
@@ -243,9 +242,7 @@ h2 {
 }
 
 .expected-answer {
-  outline-offset: 4px;
-  outline-style: inset;
-  outline: 4px groove rgb(109, 161, 152);
+  border: 4px groove rgb(109, 161, 152);
 }
 
 button {
@@ -301,11 +298,25 @@ button:hover {
   display: none;
 }
 
-#dialog img {
-  position: fixed;
-  margin: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#dialog {
+  position: relative;
   border-radius: 15px;
+  padding: 0;
+  overflow: hidden;
+}
+
+#dialog img {
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+.text-of-modal {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  text-transform: uppercase;
+  color: pink;
+  background: transparent;
+  text-shadow: 1px 1px 2px rgb(63, 59, 50);
+  font: bold 45px/34px Helvetica, Sans-Serif;
 }

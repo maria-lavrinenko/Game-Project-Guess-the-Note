@@ -1,6 +1,6 @@
 import Note from "./notes.js";
 
-import { playScreen, startGame, menuScreen } from "./script.js";
+import { playScreen, startGame, menuScreen, finalAudio } from "./script.js";
 
 export function playShort(arr) {
   arr.forEach((note) => note.short());
@@ -29,12 +29,13 @@ export function gameOver() {
   const dialog = document.getElementById("dialog");
 
   dialog.showModal();
+  finalAudio.volume = 0.2;
+  finalAudio.play();
 
   dialog.addEventListener("keypress", () => {
+    finalAudio.pause();
     dialog.close();
-    // playScreen.classList.add("hidden");
-    // menuScreen.classList.remove("hidden");
-
-    window.location.reload();
+    playScreen.classList.add("hidden");
+    menuScreen.classList.remove("hidden");
   });
 }
