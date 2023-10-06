@@ -29,7 +29,7 @@ export function gameOver() {
   const dialog = document.getElementById("dialog");
 
   dialog.showModal();
-  finalAudio.volume = 0.2;
+  finalAudio.volume = 0.1;
   finalAudio.play();
 
   dialog.addEventListener("keypress", () => {

@@ -11,9 +11,7 @@ const data = [
   { name: "si", audio: new Audio("./audio/si.mp3") },
 ];
 const notes = data.map((noteData) => new Note(noteData.name, noteData.audio));
-export const finalAudio = new Audio(
-  "./audio/Ed Sheeran - Shape Of You _ Piano Cover by Pianella Piano (256  kbps).mp3"
-);
+export const finalAudio = new Audio("./audio/final sound.mp3");
 let time = 10;
 let scoring = 0;
 
