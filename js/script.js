@@ -2,17 +2,17 @@ import Note from "./notes.js";
 import { playShort, playLong, playTheScale, gameOver } from "./functions.js";
 
 const data = [
-  { name: "do", audio: new Audio("./../audio/do.mp3") },
-  { name: "re", audio: new Audio("./../audio/re.mp3") },
-  { name: "mi", audio: new Audio("./../audio/mi.mp3") },
-  { name: "fa", audio: new Audio("./../audio/fa.mp3") },
-  { name: "sol", audio: new Audio("./../audio/sol.mp3") },
-  { name: "la", audio: new Audio("./../audio/la.mp3") },
-  { name: "si", audio: new Audio("./../audio/si.mp3") },
+  { name: "do", audio: new Audio("./audio/do.mp3") },
+  { name: "re", audio: new Audio("./audio/re.mp3") },
+  { name: "mi", audio: new Audio("./audio/mi.mp3") },
+  { name: "fa", audio: new Audio("./audio/fa.mp3") },
+  { name: "sol", audio: new Audio("./audio/sol.mp3") },
+  { name: "la", audio: new Audio("./audio/la.mp3") },
+  { name: "si", audio: new Audio("./audio/si.mp3") },
 ];
 const notes = data.map((noteData) => new Note(noteData.name, noteData.audio));
 export const finalAudio = new Audio(
-  "./../audio/Ed Sheeran - Shape Of You _ Piano Cover by Pianella Piano (256  kbps).mp3"
+  "./audio/Ed Sheeran - Shape Of You _ Piano Cover by Pianella Piano (256  kbps).mp3"
 );
 let time = 10;
 let scoring = 0;
@@ -23,8 +23,8 @@ let notesToPlay = [];
 let clickedBtns = [];
 let state = "";
 
-const noSound = new Audio("./../audio/wrong-answer.mp3");
-const okSound = new Audio("./../audio/right-answer.mp3");
+const noSound = new Audio("./audio/wrong-answer.mp3");
+const okSound = new Audio("./audio/right-answer.mp3");
 
 const startBtn = document.getElementById("start");
 const startScreen = document.getElementById("start-screen");
