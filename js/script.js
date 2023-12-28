@@ -11,10 +11,9 @@ const data = [
   { name: "si", audio: new Audio("./audio/si.mp3") },
 ];
 const notes = data.map((noteData) => new Note(noteData.name, noteData.audio));
-export const finalAudio = new Audio("./audio/final sound.mp3");
-let time = 10;
-let scoring = 0;
+const timeout = 30;
 
+let scoring = 0;
 let scoringTriplet = 0;
 let canPlay = true;
 let notesToPlay = [];
@@ -24,17 +23,11 @@ let state = "";
 const noSound = new Audio("./audio/wrong-answer.mp3");
 const okSound = new Audio("./audio/right-answer.mp3");
 
-const startBtn = document.getElementById("start");
-const startScreen = document.getElementById("start-screen");
-export const menuScreen = document.getElementById("menu-screen");
 const notesBtn = document.querySelectorAll(".notesBtn");
 const singleNote = document.getElementById("single-note");
 const triplet = document.getElementById("triplet");
 
-export const playScreen = document.getElementById("play-screen");
-
 const timer = document.querySelector("#time span");
-timer.textContent = time;
 
 const score = document.querySelector("#score span");
 
@@ -50,27 +43,20 @@ scale.addEventListener("click", () => {
   playTheScale(notes);
 });
 
-startBtn.addEventListener("click", startToMenu);
-
-function startToMenu() {
-  startScreen.classList.add("hidden");
-  menuScreen.classList.remove("hidden");
-  startGame();
-}
-
-export function startGame() {
-  time = 10;
-
-  timer.textContent = time;
-  menuScreen.addEventListener("click", () => {
-    menuScreen.classList.add("hidden");
-    playScreen.classList.remove("hidden");
+notesBtn.forEach((noteBtn) => {
+  noteBtn.addEventListener("click", (event) => {
+    if (!canPlay) {
+      return;
+    }
+    event.target.classList.add("clicked");
+    clickedBtns.push(event.target);
+    console.log(clickedBtns);
   });
-}
+});
 
 singleNote.addEventListener("click", () => {
   state = "singleNote";
-  let time = 10;
+  let time = timeout;
   timer.textContent = time;
   notesToPlay = [];
   resetClass();
@@ -82,7 +68,6 @@ singleNote.addEventListener("click", () => {
   const intervalId = setInterval(() => {
     time--;
     timer.textContent = time;
-    // score.textContent = scoring;
 
     if (time === 0) {
       canPlay = false;
@@ -96,57 +81,52 @@ singleNote.addEventListener("click", () => {
 
 function startSingleNote() {
   canPlay = true;
-  let time = 10;
+  let time = timeout;
   randomChoice();
   notesToPlay[0].normal();
   notesToPlay[0].play();
+  if (clickedBtns.length === 1 && state === "singleNote") {
+    checkIfCorrect(clickedBtns);
+    score.textContent = scoring;
 
-  for (let i = 0; i < notesBtn.length; i++) {
-    notesBtn[i].addEventListener("click", singleButtons);
+    setTimeout(() => {
+      resetClass();
+      notesToPlay = [];
+      clickedBtns = [];
+
+      startSingleNote();
+    }, 1200);
   }
 }
 
-function singleButtons(event) {
-  if (
-    event.target.classList.contains("clicked") ||
-    !canPlay ||
-    state !== "singleNote"
-  )
-    return;
-  console.log("button clicked");
-  event.target.classList.add("clicked");
+// for (let i = 0; i < notesBtn.length; i++) {
+//   notesBtn[i].addEventListener("click", singleButtons);
+// }
+// }
+// function singleButtons(event) {
+// if (
+//   event.target.classList.contains("clicked") ||
+//   !canPlay ||
+//   state !== "singleNote"
+// )
+//   return;
 
-  if (clickedBtns.length < 1) {
-    clickedBtns.push(event.target);
+// event.target.classList.add("clicked");
 
-    if (clickedBtns.length === 1) {
-      canPlay = false;
+// if (clickedBtns.length < 1) {
+//   clickedBtns.push(event.target);
 
-      checkIfCorrect(clickedBtns);
-      score.textContent = scoring;
-
-      setTimeout(() => {
-        resetClass();
-        notesToPlay = [];
-        clickedBtns = [];
-        let time = 10;
-        startSingleNote();
-      }, 1200);
-    }
-  }
-}
+// s
 
 function randomChoice() {
   const randomNote = notes[Math.floor(Math.random() * notes.length)];
   notesToPlay.push(randomNote);
-  console.log("random choice func - notes to play", notesToPlay);
-  console.log("clicked btn at random choice moment", clickedBtns);
 }
 
 triplet.addEventListener("click", () => {
   state = "tripletNote";
   resetClass();
-  time = 10;
+  let time = 30;
   timer.textContent = time;
   scoringTriplet = 0;
   notesToPlay = [];
@@ -169,6 +149,7 @@ triplet.addEventListener("click", () => {
 
 function startTriplet() {
   canPlay = true;
+  let time = timeout;
   clickedBtns.length = 0;
   for (let i = 0; i < 3; i++) {
     randomChoice();

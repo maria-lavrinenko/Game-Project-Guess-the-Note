@@ -1,10 +1,10 @@
-<!-- <!DOCTYPE html> -->
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/style.css" />
-    <script type="module" src="./js/script.js"></script>
+    <script type="module" src="./js/script-2.js"></script>
 
     <title>Guess the note</title>
   </head>
@@ -35,19 +35,31 @@
 
       <button id="play-short">Play Short</button>
       <section id="scale-section">
-        <div class="notes-on-scale" id="space"></div>
-        <div class="notes-on-scale" id="space"></div>
-        <div class="notes-on-scale" id="do"></div>
-        <div class="notes-on-scale" id="re"></div>
-        <div class="notes-on-scale" id="mi"></div>
-        <div class="notes-on-scale" id="fa"></div>
-        <div class="notes-on-scale" id="space"></div>
-        <div class="notes-on-scale" id="sol"></div>
-        <div class="notes-on-scale" id="la"></div>
-        <div class="notes-on-scale" id="si"></div>
-        <div class="notes-on-scale" id="space"></div>
-        <div class="notes-on-scale" id="space"></div>
-        <div class="notes-on-scale" id="space"></div>
+        <div class="notes-on-scale" id="clef">
+          <img src="./styles/pictures/clef.jpg" alt="violin clef" />
+        </div>
+        <div class="notes-on-scale" id="do">
+          <img src="./styles/pictures/do.jpg" alt="do note" />
+        </div>
+        <div class="notes-on-scale" id="re">
+          <img src="./styles/pictures/re.jpg" alt="re note" />
+        </div>
+        <div class="notes-on-scale" id="mi">
+          <img src="./styles/pictures/mi.jpg" alt="mi note" />
+        </div>
+        <div class="notes-on-scale" id="fa">
+          <img src="./styles/pictures/fa.jpg" alt="fa note" />
+        </div>
+
+        <div class="notes-on-scale" id="sol">
+          <img src="./styles/pictures/sol.jpg" alt="sol note" />
+        </div>
+        <div class="notes-on-scale" id="la">
+          <img src="./styles/pictures/la.jpg" alt="la note" />
+        </div>
+        <div class="notes-on-scale" id="si">
+          <img src="./styles/pictures/si.jpg" alt="si note" />
+        </div>
       </section>
       <div id="answer-space">
         <button id="do" class="notesBtn">DO</button>
@@ -66,7 +78,7 @@
     </div>
     <dialog id="dialog">
       <h3 class="text-of-modal">time is over!</h3>
-      <img src="./styles/press-any-key.jpeg" alt="Press any key to quit" />
+      <img src="./styles/pictures/piano.jpg" alt="Press any key to quit" />
     </dialog>
   </body>
 </html>

@@ -57,11 +57,7 @@ h1 {
     background-position: 200% center;
   }
 }
-@media screen and (max-width: 768px) {
-  h1 {
-    font-size: 60px;
-  }
-}
+
 h2 {
   width: fit-content;
   height: fit-content;
@@ -79,6 +75,27 @@ h2 {
   font-weight: 100;
 
   text-shadow: 2px 2px 4px rgba(1, 20, 10, 0.5);
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 50;
+  }
+  h2 {
+    /* /* max-width: 50%; */
+    font-weight: lighter;
+    word-wrap: break-word;
+  }
+}
+@media screen and (max-width: 320px) {
+  h1 {
+    font-size: smaller;
+  }
+  h2 {
+    /* /* max-width: 50%; */
+    font-size: small;
+    word-wrap: break-word;
+  }
 }
 #menu-screen {
   display: flex;
@@ -154,6 +171,13 @@ h2 {
 }
 
 @media screen and (max-width: 768px) {
+  #menu-screen {
+    display: flex;
+    flex-direction: column;
+    row-gap: none;
+    margin: 0;
+  }
+
   .sec-menu-screen-1 {
     text-wrap: nowrap;
     display: flex;
@@ -219,7 +243,6 @@ h2 {
   flex-direction: row;
   justify-content: center;
 
-  background-image: url("./scale.png");
   background-repeat: no-repeat;
   background-size: 60%;
   background-position: center;
@@ -227,11 +250,7 @@ h2 {
 }
 
 .notes-on-scale {
-  width: 70px;
-  display: inline-block;
-  /* height: 70px */
-
-  margin: 0, 5%, 5%, 0;
+  margin: 0;
 }
 
 .wrong-answer {
@@ -246,10 +265,10 @@ h2 {
 }
 
 button {
-  background-color: #8dae17;
+  background-color: #1774ae;
   border: 0;
   border-radius: 56px;
-  color: #e2e9c8;
+  color: whitesmoke;
   cursor: pointer;
   display: inline-block;
   font-family: Arial, Helvetica, sans-serif;

@@ -1,6 +1,19 @@
-import Note from "./notes.js";
+const finalAudio = new Audio("./audio/final sound.mp3");
+const menuScreen = document.getElementById("menu-screen");
+const playScreen = document.getElementById("play-screen");
+const startScreen = document.getElementById("start-screen");
+const startBtn = document.getElementById("start");
+startBtn.addEventListener("click", startToMenu);
 
-import { playScreen, startGame, menuScreen, finalAudio } from "./script.js";
+// const playShortBtn = document.getElementById("play-short");
+// const playLongBtn = document.getElementById("play-long");
+// playLongBtn.addEventListener("click", () => playLong(notesToPlay));
+// playShortBtn.addEventListener("click", () => playShort(notesToPlay));
+
+// scale.addEventListener("click", () => {
+//   notes.forEach((note) => note.normal());
+//   playTheScale(notes);
+// });
 
 export function playShort(arr) {
   arr.forEach((note) => note.short());
@@ -23,6 +36,16 @@ export function playTheScale(arr, index = 0) {
     },
     { once: true }
   );
+}
+
+export function startToMenu() {
+  startScreen.classList.add("hidden");
+  menuScreen.classList.remove("hidden");
+}
+
+export function startPlay() {
+  menuScreen.classList.add("hidden");
+  playScreen.classList.remove("hidden");
 }
 
 export function gameOver() {
